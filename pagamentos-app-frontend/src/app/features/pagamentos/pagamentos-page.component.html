@@ -1,0 +1,170 @@
+<p-toast></p-toast>
+
+<main class="page">
+  <section class="hero">
+    <div>
+      <p class="eyebrow">AWS Serverless App</p>
+      <h1>Pagamentos</h1>
+      <p class="subtitle">
+        Frontend Angular a consumir API Gateway, Lambda e DynamoDB.
+      </p>
+    </div>
+
+    <p-button
+      label="Recarregar"
+      icon="pi pi-refresh"
+      severity="secondary"
+      (onClick)="loadPagamentos()">
+    </p-button>
+  </section>
+
+  <section class="grid">
+    <p-card header="Criar pagamento">
+      <div class="form">
+        <label>
+          Número do processo
+          <input
+            pInputText
+            type="text"
+            [(ngModel)]="createForm.processNum"
+            placeholder="Ex: PROC-001" />
+        </label>
+
+        <label>
+          Valor
+          <input
+            pInputText
+            type="text"
+            [(ngModel)]="createForm.processValue"
+            placeholder="Ex: 25.50" />
+        </label>
+
+        <p-button
+          label="Criar"
+          icon="pi pi-plus"
+          (onClick)="createPagamento()">
+        </p-button>
+      </div>
+    </p-card>
+
+    <p-card header="Pagar processos">
+      <div class="form">
+        <label>
+          Processos a pagar
+          <textarea
+            rows="5"
+            [(ngModel)]="payInput"
+            placeholder="Um processo por linha ou separados por vírgula"></textarea>
+        </label>
+
+        <p-button
+          label="Pagar"
+          icon="pi pi-check"
+          severity="success"
+          (onClick)="pagarProcessos()">
+        </p-button>
+      </div>
+
+      @if (payResponse) {
+        <p-divider></p-divider>
+
+        <div class="payment-result">
+          <p><strong>Total pago:</strong> {{ payResponse.total }}</p>
+
+          <p><strong>Pagos agora:</strong></p>
+          <ul>
+            @for (pagamento of payResponse.pagamentosPagos; track pagamento.processNum) {
+              <li>{{ pagamento.processNum }} — {{ pagamento.processValue }}</li>
+            }
+          </ul>
+
+          @if (payResponse.alreadyPaid.length > 0) {
+            <p><strong>Já estavam pagos:</strong></p>
+            <ul>
+              @for (processNum of payResponse.alreadyPaid; track processNum) {
+                <li>{{ processNum }}</li>
+              }
+            </ul>
+          }
+
+          @if (payResponse.notFound.length > 0) {
+            <p><strong>Não encontrados:</strong></p>
+            <ul>
+              @for (processNum of payResponse.notFound; track processNum) {
+                <li>{{ processNum }}</li>
+              }
+            </ul>
+          }
+        </div>
+      }
+    </p-card>
+  </section>
+
+  <p-card header="Lista de pagamentos">
+    <div class="table-actions">
+      <p-button
+        label="Todos"
+        severity="secondary"
+        (onClick)="loadPagamentos()">
+      </p-button>
+
+      <p-button
+        label="PENDING"
+        severity="warn"
+        (onClick)="loadByStatus('PENDING')">
+      </p-button>
+
+      <p-button
+        label="PAGO"
+        severity="success"
+        (onClick)="loadByStatus('PAGO')">
+      </p-button>
+    </div>
+
+    <p-table
+      [value]="pagamentos"
+      [loading]="loading"
+      [paginator]="true"
+      [rows]="10"
+      responsiveLayout="scroll">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Processo</th>
+          <th>Valor</th>
+          <th>Status</th>
+          <th>Criado em</th>
+          <th>Ações</th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-pagamento>
+        <tr>
+          <td>{{ pagamento.processNum }}</td>
+          <td>{{ pagamento.processValue }}</td>
+          <td>
+            <p-tag
+              [value]="pagamento.status"
+              [severity]="statusSeverity(pagamento.status)">
+            </p-tag>
+          </td>
+          <td>{{ pagamento.createdAt }}</td>
+          <td>
+            <p-button
+              icon="pi pi-trash"
+              severity="danger"
+              [rounded]="true"
+              [text]="true"
+              (onClick)="deletePagamento(pagamento.id)">
+            </p-button>
+          </td>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="5">Nenhum pagamento encontrado.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-card>
+</main>
