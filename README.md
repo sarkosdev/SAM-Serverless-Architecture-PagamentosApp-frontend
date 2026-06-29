@@ -19,3 +19,14 @@ This frontend will be deployed using AWS Amplify, a Serverless solution when it 
 
 4. Now we need to configure our frontend deployment. And for that we need to create two files '/environments/environments.ts' for local development use and '/environments/environments.prod.ts' for production with AWS Amplify
 
+5. Now we deploy the application to our AWS Amplify
+    - Commit and push your code to your git repository
+    - Go to AWS Console
+        - AWS Amplify
+        - Select Deploy an app
+        - Select GitHub -> Next
+        - Authenticate on your GitHub and select which repository you want to allow
+        - Select repository 'sarkosdev/SAM-Serverless-Architecture-PagamentosApp-frontend' 
+        - Select branch main
+        - Amplify should detect our amplify.yml file for deployment
+        - Deploy
