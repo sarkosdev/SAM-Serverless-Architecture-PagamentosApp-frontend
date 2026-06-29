@@ -10,6 +10,7 @@ import { CreatePagamentoRequest, Pagamento, PagamentoStatus, PagarPagamentosRequ
   providedIn: 'root'
 })
 export class PagamentosService {
+    
   private readonly apiUrl = `${environment.apiBaseUrl}/pagamentos`;
 
   constructor(private http: HttpClient) {}

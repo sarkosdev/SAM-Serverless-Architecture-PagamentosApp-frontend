@@ -2,9 +2,9 @@
   "name": "pagamentos-app-frontend",
   "version": "0.0.0",
   "scripts": {
-    "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
+     "start": "ng serve --proxy-config proxy.conf.json",
+    "build": "ng build --configuration production",
+    "build:dev": "ng build --configuration development",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:pagamentos-app-frontend": "node dist/pagamentos-app-frontend/server/server.mjs"
