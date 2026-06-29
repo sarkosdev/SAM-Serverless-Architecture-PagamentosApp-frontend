@@ -15,4 +15,7 @@ This frontend will be deployed using AWS Amplify, a Serverless solution when it 
 2. Install PrimeNG library 
     - `npm install primeng @primeuix/themes primeicons`
 
+3. Create your componentes, and service that connects to our backend server
+
+4. Now we need to configure our frontend deployment. And for that we need to create two files '/environments/environments.ts' for local development use and '/environments/environments.prod.ts' for production with AWS Amplify
 
