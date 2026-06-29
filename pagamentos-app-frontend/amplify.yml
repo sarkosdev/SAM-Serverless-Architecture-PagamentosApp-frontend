@@ -1,17 +1,23 @@
 version: 1
-frontend:
-  phases:
-    preBuild:
-      commands:
-        - node --version
-        - npm ci
-    build:
-      commands:
-        - npm run build
-  artifacts:
-    baseDirectory: dist/pagamentos-app-frontend/browser
-    files:
-      - '**/*'
-  cache:
-    paths:
-      - node_modules/**/*
+applications:
+  - appRoot: pagamentos-app-frontend
+    frontend:
+      phases:
+        preBuild:
+          commands:
+            - node --version
+            - npm --version
+            - npm ci
+        build:
+          commands:
+            - npm run build
+            - echo "Build output:"
+            - find dist -maxdepth 4 -type f | sort | head -100
+            - test -f dist/pagamentos-app-frontend/browser/index.html
+      artifacts:
+        baseDirectory: dist/pagamentos-app-frontend/browser
+        files:
+          - '**/*'
+      cache:
+        paths:
+          - node_modules/**/*
