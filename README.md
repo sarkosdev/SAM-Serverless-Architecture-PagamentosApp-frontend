@@ -30,3 +30,7 @@ This frontend will be deployed using AWS Amplify, a Serverless solution when it 
         - Select branch main
         - Amplify should detect our amplify.yml file for deployment
         - Deploy
+
+6. Install Amplify JS in order to integrate Cognito Resource on our application
+    - `npm install aws-amplify`
+
