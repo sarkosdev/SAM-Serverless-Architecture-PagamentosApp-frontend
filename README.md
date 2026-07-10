@@ -730,3 +730,10 @@ The backend implementation is available in the following repository:
 
 Together, both repositories demonstrate the implementation of a complete cloud-native serverless application built on AWS using modern frontend and backend technologies and AWS resources and best pratices.
 
+---
+
+## License
+
+This project is intended for learning, portfolio and architectural demonstration purposes.
+
+**Nuno Cruz, 07/09/2026**
