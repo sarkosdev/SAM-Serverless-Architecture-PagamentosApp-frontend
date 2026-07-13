@@ -16,6 +16,13 @@ export const routes: Routes = [
         .then(m => m.PagamentosPageComponent)
   },
   {
+    path:'pagamento-historico',
+    canActivate: [authGuard],
+    loadComponent: () => 
+      import('./features/pagamento-historico/pagamento-historico')
+    .then(m => m.PagamentoHistorico)
+  },
+  {
     path: '**',
     redirectTo: ''
   }

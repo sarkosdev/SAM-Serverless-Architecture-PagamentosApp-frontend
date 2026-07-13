@@ -16,6 +16,13 @@
       severity="secondary"
       (onClick)="loadPagamentos()">
     </p-button>
+
+    <p-button
+      label="Consultar Historico de Pagamentos"
+      icon="pi pi-clipboard"
+      severity="secondary"
+      (onClick)="navigateToHistorico()"
+    ></p-button>
   </section>
 
   <section class="grid">
@@ -37,6 +44,8 @@
             type="text"
             [(ngModel)]="createForm.processValue"
             placeholder="Ex: 25.50" />
+
+          
         </label>
 
         <p-button

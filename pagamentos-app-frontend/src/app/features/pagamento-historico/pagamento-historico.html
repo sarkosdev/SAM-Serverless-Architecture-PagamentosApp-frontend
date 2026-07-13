@@ -1,0 +1,52 @@
+
+<main class="page">
+    <section class="hero">
+        <div>
+            <p class="eyebrow">AWS Serverless App</p>
+            <h1>Historico de Pagamentos</h1>
+            <p class="subtitle">
+            Frontend Angular a consumir API Gateway, Lambda e DynamoDB.
+            </p>
+        </div>
+
+        <p-button
+            label="Voltar Pagina Principal"
+            icon="pi pi-home"
+            severity="secondary"
+            (onClick)="navigateBackHome()"
+        ></p-button>
+
+    </section>
+
+
+    <p-table
+        [value]="historico"
+        [loading]="loading"
+        [paginator]="true"
+        [rows]="10"
+        responsiveLayout="scroll">
+
+        <!-- TABLE COLUMNS -->
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Data Pagamento</th>
+                <th>Lista Processos</th>
+                <th>Valor</th>
+                <th>Ações</th>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-historico>
+            <tr>
+
+            </tr>
+        </ng-template>
+
+    </p-table>
+
+</main>
+
+
+
+
+

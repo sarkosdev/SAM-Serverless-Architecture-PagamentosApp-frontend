@@ -13,6 +13,8 @@ import { MessageService } from 'primeng/api';
 
 import { PagamentosService } from '../../core/services/pagamentos.service';
 import { Pagamento, PagamentoStatus, PagarPagamentosResponse } from '../../core/service-models';
+import { Router, RouterModule } from '@angular/router';
+import { InputNumberModule } from 'primeng/inputnumber';
 
 
 @Component({
@@ -27,7 +29,9 @@ import { Pagamento, PagamentoStatus, PagarPagamentosResponse } from '../../core/
     InputTextModule,
     TableModule,
     TagModule,
-    ToastModule
+    ToastModule,
+    RouterModule,
+    InputNumberModule
   ],
   providers: [MessageService],
   templateUrl: './pagamentos-page.component.html',
@@ -47,7 +51,8 @@ export class PagamentosPageComponent implements OnInit {
 
   constructor(
     private pagamentosService: PagamentosService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -142,6 +147,11 @@ export class PagamentosPageComponent implements OnInit {
 
   statusSeverity(status: PagamentoStatus): 'success' | 'warn' {
     return status === 'PAGO' ? 'success' : 'warn';
+  }
+
+  // Navigate to 'Historico Pagamentos' page
+  navigateToHistorico(){
+    this.router.navigate(['/pagamento-historico']);
   }
 
   private showSuccess(detail: string): void {
