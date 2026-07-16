@@ -3,6 +3,7 @@ import { HomePageComponent } from './features/home/home-page.component';
 import { authGuard, guestGuard } from './auth/auth.guard';
 
 
+/*
 export const routes: Routes = [
   {
     path: '',
@@ -28,12 +29,13 @@ export const routes: Routes = [
     redirectTo: ''
   },
 ];
+*/
 
 
-/*
 export const routes: Routes = [
    {
-    path: 'login',
+    path: '',
+    pathMatch: 'full',
     component: HomePageComponent,
     canActivate: [guestGuard]
   },
@@ -77,9 +79,8 @@ export const routes: Routes = [
       // Rota invalida
       {
         path: '**',
-        redirectTo: 'login'
+        redirectTo: ''
       }
     ]
   }
 ];
-*/
