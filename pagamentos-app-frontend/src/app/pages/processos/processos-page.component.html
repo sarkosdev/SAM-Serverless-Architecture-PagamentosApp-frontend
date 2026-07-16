@@ -1,0 +1,314 @@
+<section class="page">
+
+  <!-- CABEÇALHO DA PÁGINA -->
+  <header class="page-header">
+    <div>
+      <span class="page-eyebrow">GESTÃO</span>
+      <h1>Processos</h1>
+      <p>Consulta e gestão de processos</p>
+    </div>
+
+    <p-button
+      label="Novo pagamento"
+      icon="pi pi-plus"
+      (click)="abrirNovoProcesso()"
+      styleClass="p-button-color"
+    />
+
+
+    <p-button
+      label="Atualizar"
+      icon="pi pi-refresh"
+      severity="secondary"
+      [outlined]="true"
+      [loading]="aCarregar"
+      (click)="carregarProcessos()"
+      
+    />
+
+  </header>
+
+  <!-- CONTEÚDO PRINCIPAL -->
+   <!-- 
+  <p-card header="Lista de processos">
+    <p>
+      Nesta área será apresentada a tabela de processos.
+    </p>
+  </p-card>
+  -->
+
+
+  
+  <div class="table-card">
+    <div class="table-card-header">
+
+      <!-- 
+      <div>
+        <p>{{ processos.length }} {{processos.length === 1? 'processo encontrado': 'processos encontrados'}}</p>
+      </div>
+      -->
+
+    </div>
+
+    <p-table
+      [value]="pagamentos"
+      dataKey="id"
+      [loading]="aCarregar"
+      [paginator]="true"
+      [rows]="10"
+      [rowsPerPageOptions]="[5, 10, 20, 50]"
+      [showCurrentPageReport]="true"
+      currentPageReportTemplate="A mostrar {first} a {last} de {totalRecords} processos"
+      sortField="createdAt"
+      [sortOrder]="-1"
+      stripedRows
+      responsiveLayout="scroll"
+      [tableStyle]="{
+        'min-width': '55rem'
+      }"
+    >
+
+      <!-- CABEÇALHO -->
+      <ng-template #header>
+        <tr>
+
+          <th>
+            <div class="column-header">
+              Processo
+            </div>
+          </th>
+
+          <th>
+            <div class="column-header">
+              Valor
+            </div>
+          </th>
+
+          <th>
+            <div class="column-header">
+              Estado
+            </div>
+          </th>
+
+          <th pSortableColumn="createdAt">
+            <div class="column-header">
+              Data de Criação
+              <p-sortIcon field="createdAt"/>
+            </div>
+          </th>
+
+          <th class="actions-column">
+            Ações
+          </th>
+        </tr>
+      </ng-template>
+
+      <!-- LINHAS -->
+      <ng-template #body let-pagamento>
+        <tr>
+          <td>
+            <div class="process-cell">
+              <div class="process-icon">
+                <i class="pi pi-file"></i>
+              </div>
+
+              <div class="process-details">
+                <strong>{{ pagamento.processNum }}</strong>
+              </div>
+            </div>
+          </td>
+
+          <td>
+            <span class="process-value">
+              {{
+                pagamento.processValue
+                  | currency:
+                    'EUR':
+                    'symbol':
+                    '1.2-2':
+                    'pt-PT'
+              }}
+            </span>
+          </td>
+
+          <td>
+            <p-tag
+              [value]="pagamento.status"
+              [severity]="statusSeverity(pagamento.status)">
+            </p-tag>
+          </td>
+
+          <td>
+            <div class="date-cell">
+              <i class="pi pi-calendar"></i>
+
+              <span>
+                {{
+                  pagamento.createdAt
+                    | date:
+                      'dd/MM/yyyy HH:mm':
+                      undefined:
+                      'pt-PT'
+                }}
+              </span>
+            </div>
+          </td>
+
+          <td class="actions-column">
+            <p-button
+              icon="pi pi-trash"
+              severity="danger"
+              [rounded]="true"
+              [text]="true"
+              (onClick)="deletePagamento()">
+            </p-button>
+        </tr>
+      </ng-template>
+
+      <!-- TABELA VAZIA -->
+      <ng-template #emptymessage>
+        <tr>
+          <td colspan="5">
+            <div class="empty-state">
+              <div class="empty-state-icon">
+                <i class="pi pi-inbox"></i>
+              </div>
+
+              <h3>Nenhum processo encontrado</h3>
+
+              <p>
+                Ainda não existem processos registados.
+              </p>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+
+    </p-table>
+  </div>
+
+</section>
+
+<p-confirmdialog />
+
+<p-toast position="top-right" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- MODAL NOVO PROCESSO -->
+<p-dialog
+  header="Novo processo"
+  [(visible)]="novoProcessoVisible"
+  [modal]="true"
+  [closable]="false"
+  [draggable]="false"
+  [resizable]="false"
+  [dismissableMask]="false"
+  [style]="{
+    width: '34rem',
+    maxWidth: '95vw'
+  }"
+  [breakpoints]="{
+    '640px': '95vw'
+  }"
+  styleClass="novo-processo-dialog"
+>
+
+  <form
+    class="processo-form"
+    [formGroup]="processoForm"
+    (ngSubmit)="criarProcesso()"
+  >
+
+    <!-- NÚMERO DO PROCESSO -->
+    <div class="form-field">
+      <label for="numeroProcesso">
+        Número Processo
+        <span class="required-marker">*</span>
+      </label>
+
+      <input
+        id="numeroProcesso"
+        type="text"
+        pInputText
+        formControlName="numeroProcesso"
+        placeholder="Ex: 2026/186523"
+        autocomplete="off"
+        [class.ng-invalid]="campoInvalido('numeroProcesso')"
+        [class.ng-dirty]="campoInvalido('numeroProcesso')"
+      />
+
+      @if (campoInvalido('numeroProcesso')) {
+        <small class="field-error">
+          {{ obterMensagemErro('numeroProcesso') }}
+        </small>
+      }
+    </div>
+
+    <!-- VALOR DO PROCESSO -->
+    <div class="form-field">
+      <label for="valorProcesso">
+        Valor Processo
+        <span class="required-marker">*</span>
+      </label>
+
+      <p-inputnumber
+        inputId="valorProcesso"
+        formControlName="valorProcesso"
+        mode="currency"
+        currency="EUR"
+        locale="pt-PT"
+        [min]="0.01"
+        [minFractionDigits]="2"
+        [maxFractionDigits]="2"
+        placeholder="0,00 €"
+        [fluid]="true"
+        [class.ng-invalid]="campoInvalido('valorProcesso')"
+        [class.ng-dirty]="campoInvalido('valorProcesso')"
+      />
+
+      @if (campoInvalido('valorProcesso')) {
+        <small class="field-error">
+          {{ obterMensagemErro('valorProcesso') }}
+        </small>
+      }
+    </div>
+
+    <!-- BOTÕES -->
+    <div class="dialog-actions">
+      <p-button
+        type="button"
+        label="Cancelar"
+        icon="pi pi-times"
+        severity="secondary"
+        [outlined]="true"
+        [disabled]="aCriarProcesso"
+        (click)="cancelarNovoProcesso()"
+      />
+
+      <p-button
+        type="submit"
+        label="Criar"
+        icon="pi pi-check"
+        [loading]="aCriarProcesso"
+        [disabled]="aCriarProcesso"
+      />
+    </div>
+
+  </form>
+
+</p-dialog>

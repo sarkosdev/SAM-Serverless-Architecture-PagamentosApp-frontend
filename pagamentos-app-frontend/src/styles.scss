@@ -11,3 +11,94 @@ body {
   background: #f5f7fb;
   color: #1f2937;
 }
+
+// A PARTIR DAQUI FOI ADICIONADO PARA O MENU DE LADO - CASO DE ERRO VERIFICAR
+
+:root {
+  font-family:
+    Inter,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+
+  color: #172033;
+  background: #f4f7fb;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100%;
+  margin: 0;
+}
+
+body {
+  min-width: 320px;
+
+  color: #172033;
+  background: #f4f7fb;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+/* Estrutura comum das páginas */
+
+.page {
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+.page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  margin-bottom: 22px;
+}
+
+.page-header h1 {
+  margin: 4px 0 6px;
+
+  color: #172033;
+
+  font-size: clamp(24px, 3vw, 32px);
+  line-height: 1.2;
+}
+
+.page-header p {
+  margin: 0;
+
+  color: #738096;
+  font-size: 14px;
+}
+
+.page-eyebrow {
+  color: #2867d8;
+
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+.content-card {
+  padding: 20px;
+
+  background: #ffffff;
+  border: 1px solid #e7ecf3;
+  border-radius: 16px;
+
+  box-shadow: 0 7px 24px rgb(15 23 42 / 5%);
+}

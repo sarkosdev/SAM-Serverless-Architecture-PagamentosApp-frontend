@@ -1,0 +1,120 @@
+:host {
+  display: block;
+}
+
+.pagamento-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  padding-top: 8px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-field label {
+  color: #ffffff;
+
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.required-marker {
+  color: #dc2626;
+}
+
+.field-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.character-counter {
+  color: #ffffff;
+  font-size: 11px;
+}
+
+.form-field input,
+.form-field textarea {
+  width: 100%;
+}
+
+.form-field textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+
+.field-error {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+
+  color: #dc2626;
+  font-size: 12px;
+}
+
+.dialog-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+
+  padding-top: 18px;
+  margin-top: 4px;
+
+  border-top: 1px solid #e8edf5;
+}
+
+:host ::ng-deep .novo-processo-dialog .p-dialog-header {
+  padding-bottom: 12px;
+
+  border-bottom: 1px solid #e8edf5;
+}
+
+:host ::ng-deep .novo-processo-dialog .p-dialog-title {
+  color: #ffffff;
+
+  font-size: 18px;
+  font-weight: 700;
+}
+
+:host ::ng-deep .novo-processo-dialog .p-dialog-content {
+  padding-top: 20px;
+}
+
+:host ::ng-deep .p-inputnumber {
+  width: 100%;
+}
+
+:host ::ng-deep .p-inputnumber-input {
+  width: 100%;
+}
+
+:host ::ng-deep input.ng-invalid.ng-dirty,
+:host ::ng-deep textarea.ng-invalid.ng-dirty,
+:host ::ng-deep .p-inputnumber.ng-invalid .p-inputtext {
+  border-color: #dc2626;
+}
+
+@media screen and (max-width: 640px) {
+
+  .dialog-actions {
+    flex-direction: column-reverse;
+  }
+
+  :host ::ng-deep .dialog-actions .p-button {
+    width: 100%;
+  }
+}
+
+
+:host ::ng-deep .p-button-color {
+  background-color: #0784ff !important;
+  border-color: #0784ff !important;
+  color: #ffffff !important;
+}
+

@@ -1,0 +1,214 @@
+<div
+  class="app-shell"
+  [class.sidebar-collapsed]="sidebarCollapsed"
+>
+  <!-- SIDEBAR DESKTOP -->
+  <aside class="desktop-sidebar">
+
+    <div class="sidebar-brand">
+      <div class="brand-logo">
+        <i class="pi pi-credit-card"></i>
+      </div>
+
+      <div
+        class="brand-copy"
+        *ngIf="!sidebarCollapsed"
+      >
+        <strong>PAGAMENTOS</strong>
+        <small>Gestão</small>
+      </div>
+
+      <p-button
+        class="sidebar-toggle"
+        [icon]="
+          sidebarCollapsed
+            ? 'pi pi-angle-right'
+            : 'pi pi-angle-left'
+        "
+        [text]="true"
+        [rounded]="true"
+        severity="secondary"
+        aria-label="Recolher ou expandir menu"
+        (click)="toggleSidebar()"
+      />
+    </div>
+
+    <div class="sidebar-navigation">
+      <ng-container
+        *ngTemplateOutlet="
+          navigationMenu;
+          context: {
+            collapsed: sidebarCollapsed,
+            mobile: false
+          }
+        "
+      />
+    </div>
+
+  </aside>
+
+  <!-- CONTEÚDO PRINCIPAL -->
+  <section class="main-container">
+
+    <!-- TOPBAR -->
+    <header class="topbar">
+
+      <div class="topbar-left">
+        <p-button
+          class="mobile-menu-button"
+          icon="pi pi-bars"
+          [text]="true"
+          [rounded]="true"
+          severity="secondary"
+          aria-label="Abrir menu"
+          aria-controls="mobile-sidebar"
+          [attr.aria-expanded]="mobileMenuVisible"
+          (click)="openMobileMenu()"
+        />
+
+        <div class="application-title">
+          <strong>Gestão de Pagamentos</strong>
+        </div>
+      </div>
+
+      <div class="topbar-right">
+        <p-button
+          icon="pi pi-bell"
+          [text]="true"
+          [rounded]="true"
+          severity="secondary"
+          aria-label="Notificações"
+        />
+
+        <div class="current-user">
+          <p-avatar
+            label="NC"
+            shape="circle"
+            size="normal"
+          />
+
+          <div class="current-user-details">
+            <strong>Nuno Cruz</strong>
+            <small>Administrador</small>
+          </div>
+
+          <i class="pi pi-angle-down user-arrow"></i>
+        </div>
+      </div>
+    </header>
+
+    <!-- AQUI SÃO CARREGADAS AS PÁGINAS -->
+    <main class="page-content">
+      <router-outlet />
+    </main>
+  </section>
+</div>
+
+<!-- SIDEBAR MOBILE -->
+<p-drawer
+  id="mobile-sidebar"
+  [(visible)]="mobileMenuVisible"
+  position="left"
+  styleClass="mobile-sidebar-drawer"
+>
+  <ng-template #headless>
+
+    <div class="mobile-drawer-content">
+
+      <div class="mobile-drawer-header">
+        <div class="mobile-brand">
+          <div class="brand-logo">
+            <i class="pi pi-credit-card"></i>
+          </div>
+
+          <div class="brand-copy">
+            <strong>PAGAMENTOS</strong>
+            <small>Administração</small>
+          </div>
+        </div>
+
+        <p-button
+          icon="pi pi-times"
+          [text]="true"
+          [rounded]="true"
+          aria-label="Fechar menu"
+          (click)="closeMobileMenu()"
+        />
+      </div>
+
+      <div class="sidebar-navigation">
+        <ng-container
+          *ngTemplateOutlet="
+            navigationMenu;
+            context: {
+              collapsed: false,
+              mobile: true
+            }
+          "
+        />
+      </div>
+
+    </div>
+
+  </ng-template>
+</p-drawer>
+
+<!-- TEMPLATE REUTILIZÁVEL DO MENU -->
+<ng-template
+  #navigationMenu
+  let-collapsed="collapsed"
+  let-mobile="mobile"
+>
+  <p-menu
+    [model]="menuItems"
+    styleClass="sidebar-menu"
+  >
+    <!-- TÍTULO DE CADA SECÇÃO -->
+    <ng-template
+      #submenuheader
+      let-item
+    >
+      <span
+        *ngIf="!collapsed"
+        class="sidebar-section-title"
+      >
+        {{ item.label }}
+      </span>
+
+      <span
+        *ngIf="collapsed"
+        class="sidebar-section-divider"
+      ></span>
+    </ng-template>
+
+    <!-- CADA ITEM DO MENU -->
+    <ng-template
+      #item
+      let-item
+    >
+      <a
+        pRipple
+        class="menu-link"
+        [routerLink]="item.routerLink"
+        routerLinkActive="active-menu-item"
+        [routerLinkActiveOptions]="{ exact: true }"
+        [attr.aria-label]="item.label"
+        [pTooltip]="collapsed ? item.label : ''"
+        tooltipPosition="right"
+        (click)="onMenuItemClick(mobile)"
+      >
+        <i
+          class="menu-icon"
+          [class]="item.icon"
+        ></i>
+
+        <span
+          class="menu-label"
+          *ngIf="!collapsed"
+        >
+          {{ item.label }}
+        </span>
+      </a>
+    </ng-template>
+  </p-menu>
+</ng-template>
